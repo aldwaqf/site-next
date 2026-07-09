@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { Language, ProjectStatus } from "@prisma/client";
+import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { serializeAmounts } from "@/lib/serializers";
 
@@ -58,8 +59,7 @@ export async function GET(request: NextRequest) {
   });
 }
 
-// POST /api/projects — création d'un projet
-// ⚠️ Sera réservé aux admins à l'Étape 5 (auth).
+// POST /api/projects — création d'un projet (réservé aux admins)
 const translationSchema = z.object({
   language: z.enum(["FR", "EN", "AR"]),
   title: z.string().min(1),
@@ -83,6 +83,14 @@ const createProjectSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: "Connexion requise" }, { status: 401 });
+  }
+  if (session.user.role !== "ADMIN") {
+    return NextResponse.json({ error: "Réservé aux administrateurs" }, { status: 403 });
+  }
+
   const body = await request.json().catch(() => null);
   const parsed = createProjectSchema.safeParse(body);
 
