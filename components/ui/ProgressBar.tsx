@@ -43,9 +43,9 @@ const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
                     <div className="flex justify-between text-sm mb-2">
                         <span className="text-gray-600">
                             <span className="font-bold text-emerald-600">
-                                {value.toLocaleString()}
+                                {value.toLocaleString('fr-FR')}
                             </span>{' '}
-                            / {max.toLocaleString()}
+                            / {max.toLocaleString('fr-FR')}
                         </span>
                         <span className="font-bold text-emerald-600">{percentage}%</span>
                     </div>
