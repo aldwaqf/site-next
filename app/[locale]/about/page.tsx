@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 
 export default function AboutPage() {
     const t = useTranslations('about');
+    const tCommon = useTranslations('common');
     const params = useParams();
 
     return (
@@ -396,7 +397,7 @@ export default function AboutPage() {
                                         href={`/${params.locale}/contact`}
                                         className="inline-block px-6 py-3 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 transition-colors"
                                     >
-                                        {t('common.learnMore')}
+                                        {tCommon('learnMore')}
                                     </Link>
                                 </div>
                                 <div className="relative">
