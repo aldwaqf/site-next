@@ -162,13 +162,6 @@ const mockArticles = [
     },
 ];
 
-const mockStats = {
-    totalAmount: 34550000,
-    totalDonations: 34550000,
-    totalDonors: 457,
-    totalProjects: 3,
-    totalCampaigns: mockCampaigns.length,
-};
 
 // Simule la petite latence d'un vrai appel réseau
 const delay = (ms = 150) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -243,23 +236,33 @@ export const donationsApi = {
         isAnonymous?: boolean;
         message?: string;
     }) => {
-        await delay();
-        return { id: 'don_mock', status: 'PENDING', ...donation };
-    },
-
-    confirm: async (donationId: string, reference: string, provider: string) => {
-        await delay();
-        return { id: donationId, status: 'COMPLETED', reference, provider };
+        const res = await fetch('/api/donations', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(donation),
+        });
+        const data = await res.json().catch(() => null);
+        if (!res.ok) {
+            throw new Error(data?.error || `API /api/donations → ${res.status}`);
+        }
+        return data as {
+            donation: { id: string; amount: number };
+            paymentData: { checkoutUrl?: string; token?: string; reference: string; success: boolean };
+        };
     },
 
     getStats: async () => {
-        await delay();
-        return mockStats;
+        return fetchJson<{
+            totalDonations: number;
+            totalAmount: number;
+            totalDonors: number;
+            totalProjects: number;
+            totalCampaigns: number;
+        }>('/api/donations/stats');
     },
 
     getRecent: async (params?: { page?: number; limit?: number }) => {
-        await delay();
-        return paginate([], params);
+        return fetchJson<PaginatedResponse<unknown>>(`/api/donations${buildQuery(params)}`);
     },
 };
 

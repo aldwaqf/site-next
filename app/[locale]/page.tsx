@@ -86,7 +86,7 @@ export default function HomePage() {
     const formatAmount = (amount: number) => {
         if (amount >= 1000000) return `${(amount / 1000000).toFixed(1)}M`;
         if (amount >= 1000) return `${(amount / 1000).toFixed(0)}K`;
-        return amount.toLocaleString();
+        return amount.toLocaleString('fr-FR');
     };
 
     const getProgress = (collected: number, goal: number) => {
@@ -646,7 +646,7 @@ export default function HomePage() {
                                             {getProductName(product)}
                                         </h3>
                                         <div className="text-emerald-600 font-bold">
-                                            {Number(product.price).toLocaleString()} FCFA
+                                            {Number(product.price).toLocaleString('fr-FR')} FCFA
                                         </div>
                                     </div>
                                 </Link>
