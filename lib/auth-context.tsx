@@ -1,10 +1,11 @@
 'use client';
 
-// ⚠️ VERSION MOCKÉE (Étape 3 du refactor)
-// Même interface que l'auth-context original, mais personne n'est connecté.
-// L'implémentation réelle arrivera à l'Étape 5 avec Auth.js.
+// Auth réelle branchée sur Auth.js (Étape 5).
+// Garde la même interface que l'ancien mock : les composants qui
+// utilisent useAuth() n'ont pas besoin de changer.
 
 import { createContext, useContext, ReactNode } from 'react';
+import { SessionProvider, useSession, signIn, signOut, getSession } from 'next-auth/react';
 
 interface User {
     id: string;
@@ -18,7 +19,7 @@ interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
     isLoading: boolean;
-    login: (email: string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<User>;
     logout: () => void;
     checkAuth: () => Promise<void>;
 }
@@ -33,17 +34,59 @@ export function useAuth() {
     return context;
 }
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+function AuthContextBridge({ children }: { children: ReactNode }) {
+    const { data: session, status, update } = useSession();
+
+    const user: User | null = session?.user
+        ? {
+              id: session.user.id,
+              email: session.user.email ?? '',
+              firstName: session.user.firstName,
+              lastName: session.user.lastName,
+              role: session.user.role,
+          }
+        : null;
+
     const value: AuthContextType = {
-        user: null,
-        isAuthenticated: false,
-        isLoading: false,
-        login: async () => {
-            throw new Error('Auth pas encore implémentée (Étape 5)');
+        user,
+        isAuthenticated: status === 'authenticated',
+        isLoading: status === 'loading',
+        login: async (identifier, password) => {
+            const result = await signIn('credentials', {
+                identifier,
+                password,
+                redirect: false,
+            });
+            if (result?.error) {
+                throw new Error('Identifiants invalides');
+            }
+            const fresh = await getSession();
+            if (!fresh?.user) {
+                throw new Error('Connexion échouée');
+            }
+            return {
+                id: fresh.user.id,
+                email: fresh.user.email ?? '',
+                firstName: fresh.user.firstName,
+                lastName: fresh.user.lastName,
+                role: fresh.user.role,
+            };
         },
-        logout: () => {},
-        checkAuth: async () => {},
+        logout: () => {
+            void signOut({ redirect: false });
+        },
+        checkAuth: async () => {
+            await update();
+        },
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+    return (
+        <SessionProvider>
+            <AuthContextBridge>{children}</AuthContextBridge>
+        </SessionProvider>
+    );
 }

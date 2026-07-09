@@ -2,8 +2,9 @@
 // Relançable sans risque : upsert = met à jour si le slug existe déjà.
 // Lancement : npm run db:seed
 import "dotenv/config";
-import { PrismaClient, Language } from "@prisma/client";
+import { PrismaClient, Language, UserRole } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import bcrypt from "bcryptjs";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -56,7 +57,36 @@ const projects = [
   },
 ];
 
+// Comptes de test pour le développement local UNIQUEMENT.
+// À supprimer ou changer avant toute mise en production.
+const users = [
+  {
+    email: "admin@waqfald.test",
+    password: "Admin1234!",
+    firstName: "Admin",
+    lastName: "Waqf",
+    role: UserRole.ADMIN,
+  },
+  {
+    email: "donateur@waqfald.test",
+    password: "Donateur1234!",
+    firstName: "Awa",
+    lastName: "Diop",
+    role: UserRole.DONOR,
+  },
+];
+
 async function main() {
+  for (const { password, ...user } of users) {
+    const hashed = await bcrypt.hash(password, 12);
+    const result = await prisma.user.upsert({
+      where: { email: user.email },
+      update: { role: user.role, isActive: true },
+      create: { ...user, password: hashed, isVerified: true },
+    });
+    console.log(`✓ Utilisateur : ${result.email} (${result.role})`);
+  }
+
   for (const { translations, ...project } of projects) {
     const result = await prisma.project.upsert({
       where: { slug: project.slug },
