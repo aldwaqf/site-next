@@ -1,7 +1,23 @@
-// ⚠️ VERSION MOCKÉE (Étape 3 du refactor)
-// Même interface que le services.ts original, mais les données sont locales.
-// À l'Étape 4, on remplacera l'intérieur de ces fonctions par de vrais
-// appels aux API routes Next.js, sans toucher aux pages qui les utilisent.
+// Couche d'accès aux données.
+// - projectsApi : branché sur les vraies API routes (/api/projects) ✅
+// - le reste : encore mocké, sera branché au fur et à mesure des étapes.
+
+async function fetchJson<T>(url: string): Promise<T> {
+    const res = await fetch(url);
+    if (!res.ok) {
+        throw new Error(`API ${url} → ${res.status}`);
+    }
+    return res.json();
+}
+
+function buildQuery(params?: Record<string, string | number | boolean | undefined>) {
+    const search = new URLSearchParams();
+    for (const [key, value] of Object.entries(params ?? {})) {
+        if (value !== undefined) search.set(key, String(value));
+    }
+    const qs = search.toString();
+    return qs ? `?${qs}` : '';
+}
 
 // Types (repris tels quels du projet original)
 export interface Project {
@@ -56,56 +72,6 @@ export interface PaginatedResponse<T> {
 // Données mockées
 // ---------------------------------------------------------------------------
 
-const mockProjects: Project[] = [
-    {
-        id: 'proj_1',
-        slug: 'renovation-daara-thies',
-        status: 'ACTIVE',
-        goalAmount: 15000000,
-        collectedAmount: 9750000,
-        donorCount: 214,
-        featuredImage: '/img/imgi_3_Image_fx103.jpg',
-        isUrgent: true,
-        isFeatured: true,
-        translations: [
-            { language: 'FR', title: 'Rénovation du daara de Thiès', description: 'Réhabilitation complète des salles de classe et du dortoir du daara de Thiès pour accueillir 150 talibés dans de bonnes conditions.', shortDesc: 'Réhabiliter les salles et le dortoir pour 150 talibés.' },
-            { language: 'EN', title: 'Thiès Daara Renovation', description: 'Complete rehabilitation of the classrooms and dormitory of the Thiès daara to host 150 students in good conditions.', shortDesc: 'Rehabilitate classrooms and dormitory for 150 students.' },
-            { language: 'AR', title: 'ترميم دار تيس', description: 'إعادة تأهيل كاملة للفصول الدراسية والمهجع في دار تيس لاستقبال 150 طالبًا في ظروف جيدة.', shortDesc: 'إعادة تأهيل الفصول والمهجع لـ150 طالبًا.' },
-        ],
-    },
-    {
-        id: 'proj_2',
-        slug: 'puits-eau-potable-touba',
-        status: 'ACTIVE',
-        goalAmount: 8000000,
-        collectedAmount: 3200000,
-        donorCount: 87,
-        featuredImage: '/img/imgi_50_Image_fx90.jpg',
-        isUrgent: false,
-        isFeatured: true,
-        translations: [
-            { language: 'FR', title: 'Puits d\'eau potable à Touba', description: 'Forage d\'un puits et installation d\'un système de distribution d\'eau potable pour le daara et le village voisin.', shortDesc: 'Un puits pour le daara et le village.' },
-            { language: 'EN', title: 'Drinking Water Well in Touba', description: 'Drilling a well and installing a drinking water distribution system for the daara and the neighbouring village.', shortDesc: 'A well for the daara and the village.' },
-            { language: 'AR', title: 'بئر مياه صالحة للشرب في طوبى', description: 'حفر بئر وتركيب نظام توزيع مياه صالحة للشرب للدار والقرية المجاورة.', shortDesc: 'بئر للدار والقرية.' },
-        ],
-    },
-    {
-        id: 'proj_3',
-        slug: 'cantine-scolaire-dakar',
-        status: 'ACTIVE',
-        goalAmount: 5000000,
-        collectedAmount: 4650000,
-        donorCount: 156,
-        featuredImage: '/img/imgi_51_Image_fx85.jpg',
-        isUrgent: false,
-        isFeatured: false,
-        translations: [
-            { language: 'FR', title: 'Cantine scolaire à Dakar', description: 'Mise en place d\'une cantine pour offrir deux repas par jour aux 200 talibés du daara de Dakar.', shortDesc: 'Deux repas par jour pour 200 talibés.' },
-            { language: 'EN', title: 'School Canteen in Dakar', description: 'Setting up a canteen to provide two meals a day to the 200 students of the Dakar daara.', shortDesc: 'Two meals a day for 200 students.' },
-            { language: 'AR', title: 'مطعم مدرسي في داكار', description: 'إنشاء مطعم لتقديم وجبتين يوميًا لـ200 طالب في دار داكار.', shortDesc: 'وجبتان يوميًا لـ200 طالب.' },
-        ],
-    },
-];
 
 const mockCampaigns: Campaign[] = [
     {
@@ -200,7 +166,7 @@ const mockStats = {
     totalAmount: 34550000,
     totalDonations: 34550000,
     totalDonors: 457,
-    totalProjects: mockProjects.length,
+    totalProjects: 3,
     totalCampaigns: mockCampaigns.length,
 };
 
@@ -228,30 +194,21 @@ function paginate<T>(items: T[], params?: { page?: number; limit?: number }): Pa
 
 export const projectsApi = {
     getAll: async (params?: { lang?: string; page?: number; limit?: number; isUrgent?: boolean }) => {
-        await delay();
-        const filtered = params?.isUrgent !== undefined
-            ? mockProjects.filter((p) => p.isUrgent === params.isUrgent)
-            : mockProjects;
-        return paginate(filtered, params);
+        return fetchJson<PaginatedResponse<Project>>(`/api/projects${buildQuery(params)}`);
     },
 
-    getBySlug: async (slug: string) => {
-        await delay();
-        const project = mockProjects.find((p) => p.slug === slug);
-        if (!project) throw new Error(`Project not found: ${slug}`);
-        return project;
+    getBySlug: async (slug: string, lang?: string) => {
+        return fetchJson<Project>(`/api/projects/slug/${slug}${buildQuery({ lang })}`);
     },
 
-    getById: async (id: string) => {
-        await delay();
-        const project = mockProjects.find((p) => p.id === id);
-        if (!project) throw new Error(`Project not found: ${id}`);
-        return project;
+    getById: async (id: string, lang?: string) => {
+        return fetchJson<Project>(`/api/projects/${id}${buildQuery({ lang })}`);
     },
 
     getStats: async () => {
-        await delay();
-        return mockStats;
+        return fetchJson<{ total: number; active: number; urgent: number; totalCollected: number }>(
+            '/api/projects/stats',
+        );
     },
 };
 
