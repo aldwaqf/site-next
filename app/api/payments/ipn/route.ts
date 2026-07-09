@@ -30,25 +30,68 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  let customField: { type?: string; donationId?: string } = {};
+  let customField: { type?: string; donationId?: string; orderId?: string } = {};
   try {
     customField = JSON.parse(body.custom_field || "{}");
   } catch {
     console.warn("[IPN] custom_field illisible");
   }
 
-  if (customField.type !== "donation" || !customField.donationId) {
-    // Commandes boutique : seront gérées avec le module orders (Étape 8)
-    return NextResponse.json({ status: "ok", message: "Ignored" });
-  }
-
-  if (body.type_event === "sale_complete") {
-    await confirmDonation(customField.donationId, body.ref_command);
-  } else if (body.type_event === "sale_canceled") {
-    await cancelDonation(customField.donationId);
+  if (customField.type === "donation" && customField.donationId) {
+    if (body.type_event === "sale_complete") {
+      await confirmDonation(customField.donationId, body.ref_command);
+    } else if (body.type_event === "sale_canceled") {
+      await cancelDonation(customField.donationId);
+    }
+  } else if (customField.type === "order" && customField.orderId) {
+    if (body.type_event === "sale_complete") {
+      await confirmOrder(customField.orderId, body.ref_command);
+    } else if (body.type_event === "sale_canceled") {
+      await cancelOrder(customField.orderId);
+    }
   }
 
   return NextResponse.json({ status: "ok" });
+}
+
+async function confirmOrder(orderId: string, providerRef: string) {
+  const order = await prisma.order.findUnique({
+    where: { id: orderId },
+    include: { items: true },
+  });
+  if (!order) {
+    console.error(`[IPN] Commande introuvable : ${orderId}`);
+    return;
+  }
+  // Idempotence : une notification en double ne déstocke pas deux fois
+  if (order.status === "CONFIRMED") {
+    console.warn(`[IPN] Commande déjà confirmée : ${orderId}`);
+    return;
+  }
+
+  await prisma.order.update({
+    where: { id: orderId },
+    data: { status: "CONFIRMED", paidAt: new Date(), paymentRef: providerRef },
+  });
+
+  for (const item of order.items) {
+    await prisma.product.update({
+      where: { id: item.productId },
+      data: { stock: { decrement: item.quantity } },
+    });
+  }
+
+  console.info(`[IPN] Commande confirmée : ${order.orderNumber} (${Number(order.total)} XOF)`);
+}
+
+async function cancelOrder(orderId: string) {
+  await prisma.order
+    .update({
+      where: { id: orderId },
+      data: { status: "CANCELLED", cancelledAt: new Date() },
+    })
+    .catch(() => console.error(`[IPN] Annulation commande impossible : ${orderId}`));
+  console.info(`[IPN] Commande annulée : ${orderId}`);
 }
 
 async function confirmDonation(donationId: string, providerRef: string) {
