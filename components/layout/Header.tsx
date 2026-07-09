@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { usePathname, useParams } from 'next/navigation';
 import { useState } from 'react';
+import { ShoppingCart, User, Heart } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useCart } from '@/lib/cart-context';
 import { useAuth } from '@/lib/auth-context';
@@ -76,7 +77,7 @@ export default function Header() {
                             className="relative flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-xl transition-all sm:px-4"
                             aria-label="Cart"
                         >
-                            <span className="text-base">🛒</span>
+                            <ShoppingCart className="w-5 h-5" aria-hidden="true" />
                             {itemCount > 0 && (
                                 <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-emerald-600 text-white text-xs rounded-full flex items-center justify-center">
                                     {itemCount}
@@ -133,7 +134,6 @@ export default function Header() {
                             href={`/${locale}/donate`}
                             className="hidden sm:flex items-center gap-2 btn-primary py-2.5 px-5 text-sm"
                         >
-                            <span>🕌</span>
                             {t('donate')}
                         </Link>
 
@@ -176,7 +176,9 @@ export default function Header() {
                                 onClick={() => setIsMenuOpen(false)}
                                 className="px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium flex items-center justify-between"
                             >
-                                <span>🛒 {t('cart')}</span>
+                                <span className="flex items-center gap-2">
+                                    <ShoppingCart className="w-4 h-4" aria-hidden="true" /> {t('cart')}
+                                </span>
                                 {itemCount > 0 && (
                                     <span className="min-w-6 h-6 px-2 bg-emerald-600 text-white text-xs rounded-full flex items-center justify-center">
                                         {itemCount}
@@ -191,7 +193,7 @@ export default function Header() {
                                             onClick={() => setIsMenuOpen(false)}
                                             className="px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium"
                                         >
-                                            📊 {t('dashboard')}
+                                            {t('dashboard')}
                                         </Link>
                                     ) : (
                                         <Link
@@ -199,7 +201,9 @@ export default function Header() {
                                             onClick={() => setIsMenuOpen(false)}
                                             className="px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium"
                                         >
-                                            👤 {user?.firstName || t('profile')}
+                                            <span className="flex items-center gap-2">
+                                                <User className="w-4 h-4" aria-hidden="true" /> {user?.firstName || t('profile')}
+                                            </span>
                                         </Link>
                                     )}
                                     <button
@@ -223,7 +227,9 @@ export default function Header() {
                                 onClick={() => setIsMenuOpen(false)}
                                 className="mt-3 btn-primary text-center"
                             >
-                                🕌 {t('donate')}
+                                <span className="flex items-center justify-center gap-2">
+                                    <Heart className="w-4 h-4" aria-hidden="true" /> {t('donate')}
+                                </span>
                             </Link>
                         </nav>
                     </div>

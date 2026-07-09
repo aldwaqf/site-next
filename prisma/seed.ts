@@ -76,7 +76,45 @@ const users = [
   },
 ];
 
+const products = [
+  {
+    slug: "tshirt-waqf",
+    price: 8000,
+    stock: 25,
+    isActive: true,
+    isFeatured: true,
+    images: ["/img/faire-un-waqf.webp"],
+    translations: [
+      { language: Language.FR, name: "T-shirt Waqf", description: "T-shirt solidaire, les bénéfices financent les daaras." },
+      { language: Language.EN, name: "Waqf T-shirt", description: "Solidarity t-shirt, profits fund the daaras." },
+      { language: Language.AR, name: "قميص الوقف", description: "قميص تضامني، الأرباح تمول الدور." },
+    ],
+  },
+  {
+    slug: "tote-bag-daara",
+    price: 5000,
+    stock: 40,
+    isActive: true,
+    isFeatured: false,
+    images: ["/img/devenir-benevole.webp"],
+    translations: [
+      { language: Language.FR, name: "Tote bag Daara", description: "Sac en toile aux couleurs de l'association." },
+      { language: Language.EN, name: "Daara Tote Bag", description: "Canvas bag in the association's colours." },
+      { language: Language.AR, name: "حقيبة الدار", description: "حقيبة قماشية بألوان الجمعية." },
+    ],
+  },
+];
+
 async function main() {
+  for (const { translations, ...product } of products) {
+    const result = await prisma.product.upsert({
+      where: { slug: product.slug },
+      update: product,
+      create: { ...product, translations: { create: translations } },
+    });
+    console.log(`✓ Produit : ${result.slug}`);
+  }
+
   for (const { password, ...user } of users) {
     const hashed = await bcrypt.hash(password, 12);
     const result = await prisma.user.upsert({

@@ -106,34 +106,6 @@ const mockCampaigns: Campaign[] = [
     },
 ];
 
-const mockProducts = [
-    {
-        id: 'prod_1',
-        slug: 'tshirt-waqf',
-        price: 8000,
-        stock: 25,
-        isActive: true,
-        images: ['/img/faire-un-waqf.webp'],
-        translations: [
-            { language: 'FR', name: 'T-shirt Waqf', description: 'T-shirt solidaire, les bénéfices financent les daaras.' },
-            { language: 'EN', name: 'Waqf T-shirt', description: 'Solidarity t-shirt, profits fund the daaras.' },
-            { language: 'AR', name: 'قميص الوقف', description: 'قميص تضامني، الأرباح تمول الدور.' },
-        ],
-    },
-    {
-        id: 'prod_2',
-        slug: 'tote-bag-daara',
-        price: 5000,
-        stock: 40,
-        isActive: true,
-        images: ['/img/devenir-benevole.webp'],
-        translations: [
-            { language: 'FR', name: 'Tote bag Daara', description: 'Sac en toile aux couleurs de l\'association.' },
-            { language: 'EN', name: 'Daara Tote Bag', description: 'Canvas bag in the association\'s colours.' },
-            { language: 'AR', name: 'حقيبة الدار', description: 'حقيبة قماشية بألوان الجمعية.' },
-        ],
-    },
-];
 
 const mockArticles = [
     {
@@ -268,6 +240,20 @@ export const donationsApi = {
     getRecent: async (params?: { page?: number; limit?: number }) => {
         return fetchJson<PaginatedResponse<unknown>>(`/api/donations${buildQuery(params)}`);
     },
+
+    getMyDonations: async () => {
+        return fetchJson<Array<{
+            id: string;
+            amount: number;
+            currency: string;
+            type: string;
+            message?: string;
+            createdAt: string;
+            project?: { slug: string; translations?: { language: string; title: string }[] } | null;
+            campaign?: { slug: string } | null;
+            transaction?: { status: string; paymentMethod: string; paidAt?: string } | null;
+        }>>('/api/donations/me');
+    },
 };
 
 export const contentsApi = {
@@ -297,27 +283,35 @@ export const contentsApi = {
     },
 };
 
+export interface ShopProduct {
+    id: string;
+    slug: string;
+    price: number;
+    comparePrice?: number;
+    stock: number;
+    images: string[];
+    isActive: boolean;
+    isFeatured?: boolean;
+    translations: Array<{ language: string; name: string; description?: string }>;
+    categories?: Array<{ category: { id: string; translations: { language: string; name: string }[] } }>;
+}
+
 export const productsApi = {
     getAll: async (params?: { search?: string; categoryId?: string; lang?: string; isActive?: boolean; page?: number; limit?: number }) => {
-        await delay();
-        return paginate(mockProducts, params);
+        return fetchJson<PaginatedResponse<ShopProduct>>(`/api/products${buildQuery({ lang: params?.lang, page: params?.page, limit: params?.limit })}`);
     },
 
-    getBySlug: async (slug: string, _lang?: string) => {
-        await delay();
-        const product = mockProducts.find((p) => p.slug === slug);
-        if (!product) throw new Error(`Product not found: ${slug}`);
-        return product;
+    getBySlug: async (slug: string, lang?: string) => {
+        return fetchJson<ShopProduct>(`/api/products/slug/${slug}${buildQuery({ lang })}`);
     },
 
-    getCategories: async (_lang?: string) => {
-        await delay();
-        return [];
+    getCategories: async (lang?: string) => {
+        return fetchJson<Array<{ id: string; translations: Array<{ language: string; name: string }> }>>(
+            `/api/products/categories${buildQuery({ lang })}`,
+        );
     },
 };
 
-// Commandes boutique : encore mocké, le vrai module orders (avec paiement
-// PayTech et gestion du stock) sera branché avec le back-office complet.
 export const ordersApi = {
     create: async (orderData: {
         customerName: string;
@@ -327,22 +321,19 @@ export const ordersApi = {
         paymentMethod?: string;
         items: { productId: string; quantity: number }[];
     }) => {
-        await delay(400);
-        console.info('[mock] Commande reçue :', orderData);
-        return {
-            order: { id: 'order_mock', orderNumber: `CMD-${Date.now()}` },
-            paymentData: {} as { checkoutUrl?: string },
+        const res = await fetch('/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData),
+        });
+        const data = await res.json().catch(() => null);
+        if (!res.ok) {
+            throw new Error(data?.error || `API /api/orders → ${res.status}`);
+        }
+        return data as {
+            order: { id: string; orderNumber: string; total: number };
+            paymentData: { checkoutUrl?: string; token?: string; reference: string; success: boolean };
         };
-    },
-
-    getByOrderNumber: async (orderNumber: string) => {
-        await delay();
-        return { orderNumber, status: 'PENDING' };
-    },
-
-    getMyOrders: async () => {
-        await delay();
-        return [];
     },
 };
 

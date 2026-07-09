@@ -82,7 +82,7 @@ export default function ShopPage() {
                 <div className="absolute inset-0 bg-[url('/img/imgi_49_ab-bg-page-title.jpg')] bg-cover bg-center opacity-10" />
                 <div className="container relative z-10 text-center">
                     <span className="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-6">
-                        🛍️ {t('shop.cart.footerNote').trim()}
+                        {t('shop.cart.footerNote').trim()}
                     </span>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">{t('shop.title')}</h1>
                     <p className="text-xl text-white/90 max-w-2xl mx-auto">
