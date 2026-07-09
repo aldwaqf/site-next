@@ -1,0 +1,586 @@
+{
+    "slogan": "Jëmbate Luy meññ te du Rag",
+    "common": {
+        "donate": "Faire un Waqf",
+        "learnMore": "En savoir plus",
+        "contact": "Nous contacter",
+        "readMore": "Lire la suite",
+        "viewAll": "Voir tout",
+        "back": "Retour",
+        "submit": "Envoyer",
+        "loading": "Chargement...",
+        "error": "Une erreur est survenue",
+        "success": "Succès",
+        "cancel": "Annuler",
+        "confirm": "Confirmer",
+        "save": "Enregistrer",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "close": "Fermer",
+        "search": "Rechercher",
+        "currency": "FCFA"
+    },
+    "nav": {
+        "home": "Accueil",
+        "about": "À propos",
+        "projects": "Projets",
+        "donate": "Faire un don",
+        "shop": "Boutique",
+        "cart": "Panier",
+        "news": "Actualités",
+        "events": "Événements",
+        "contact": "Contact",
+        "login": "Connexion",
+        "register": "S'inscrire",
+        "dashboard": "Mon espace",
+        "logout": "Déconnexion",
+        "profile": "Mon profil"
+    },
+    "home": {
+        "hero": {
+            "title": "Association Waqf And Liggeyal Daara",
+            "brandLine1": "Waqf And Liggeyal",
+            "brandLine2": "Daara",
+            "subtitle": "Ensemble, construisons un avenir meilleur pour nos enfants",
+            "cta": "Faire un Waqf",
+            "wolof": "NJËMBAT LUY MEÑÑ TE DU RAG",
+            "mainTitle": "Votre Waqf aujourd'hui,",
+            "mainTitleHighlight": "leur espoir pour toujours.",
+            "description": "Participez à une charité perpétuelle. Nous construisons et soutenons les Daaras au Sénégal pour offrir aux générations futures une éducation digne et durable.",
+            "donateNow": "Faire un don MAINTENANT"
+        },
+        "badge": "Association caritative depuis 2015",
+        "video": {
+            "badge": "Découvrez notre action",
+            "title": "Regardez notre vidéo"
+        },
+        "mission": {
+            "badge": "Don Perpétuel",
+            "title": "Notre mission",
+            "description1": "Au cœur de notre action se trouve le principe du Waqf : un investissement caritatif dont les bénéfices ne s'arrêtent jamais.",
+            "description2": "Qu'il s'agisse de construire des salles de classe, de fournir de l'eau potable ou d'assurer la santé des Talibés, nous transformons votre don unique en une source continue de bienfaits pour la communauté.",
+            "learnMore": "En savoir plus",
+            "donationsUsed": "des dons utilisés directement"
+        },
+        "stats": {
+            "title": "Offrir de l'aide et de l'espoir aux enfants",
+            "subtitle": "Grâce à votre générosité, nous changeons des vies chaque jour",
+            "donations": "FCFA collectés",
+            "beneficiaries": "Bénéficiaires",
+            "projects": "Projets réalisés",
+            "donors": "Donateurs actifs",
+            "children": "Enfants soutenus",
+            "ctaText": "Changeons des vies ! Donner, c'est investir dans l'avenir. Même 1 000 FCFA peut faire la différence pour un enfant.",
+            "donateBtn": "FAIRE UN DON"
+        },
+        "urgentProjects": {
+            "title": "Projets urgents",
+            "subtitle": "Des projets qui ont besoin de votre soutien immédiat",
+            "urgent": "Urgent",
+            "viewAll": "Voir tous les projets",
+            "noProjects": "Aucun projet disponible pour le moment",
+            "donors": "donateurs",
+            "support": "Soutenir",
+            "items": [
+                { "title": "Daara de Thiès", "goal": "15M FCFA" },
+                { "title": "École Coranique Touba", "goal": "25M FCFA" },
+                { "title": "Rénovation Médina", "goal": "8M FCFA" }
+            ]
+        },
+        "campaigns": {
+            "title": "Campagnes en cours",
+            "subtitle": "Rejoignez nos campagnes de collecte et faites la différence",
+            "participate": "Participer"
+        },
+        "about": {
+            "badge": "À propos de nous",
+            "title": "Une fondation dédiée au bien-être de la communauté",
+            "description": "Depuis notre création, nous œuvrons pour le développement durable et l'éducation à travers des projets de Waqf (dotation perpétuelle). Notre mission est de créer un impact positif et durable dans la vie des communautés les plus vulnérables.",
+            "transparency": "Transparence",
+            "transparencyDesc": "100% des dons tracés",
+            "impact": "Impact durable",
+            "impactDesc": "Projets pérennes",
+            "proximity": "Proximité",
+            "proximityDesc": "Présence locale",
+            "expertise": "Expertise",
+            "expertiseDesc": "Équipe qualifiée",
+            "orgName": "Waqf Sénégal",
+            "orgSlogan": "Ensemble, construisons l'avenir",
+            "yearsExp": "Années d'expérience"
+        },
+        "news": {
+            "badge": "Actualités",
+            "title": "Dernières nouvelles",
+            "viewAll": "Toutes les actualités",
+            "article": "Article"
+        },
+        "shop": {
+            "badge": "Boutique solidaire",
+            "title": "Achetez utile, donnez du sens",
+            "viewAll": "Voir la boutique"
+        },
+        "testimonials": {
+            "badge": "Témoignages",
+            "title": "Ils nous font confiance",
+            "subtitle": "Ce que disent nos bénéficiaires",
+            "items": [
+                {
+                    "name": "Cheikh Anta Sow",
+                    "role": "Donateur régulier",
+                    "text": "Grâce à Waqf Sénégal, je sais que mes dons ont un impact réel et durable. La transparence de l'organisation me rassure."
+                },
+                {
+                    "name": "Fatou Diallo",
+                    "role": "Bénévole",
+                    "text": "Participer aux projets de Waqf m'a permis de voir concrètement comment nous changeons la vie des enfants dans les Daaras."
+                },
+                {
+                    "name": "Moussa Ndiaye",
+                    "role": "Partenaire",
+                    "text": "Notre collaboration avec Waqf Sénégal a été une expérience enrichissante. Leur professionnalisme est exemplaire."
+                }
+            ]
+        },
+        "cta": {
+            "title": "Nous Sommes En Mission",
+            "description": "Rejoignez-nous dans cette noble cause. Chaque don, petit ou grand, contribue à bâtir un avenir meilleur pour les générations futures.",
+            "donate": "Faire un don maintenant",
+            "contact": "Nous contacter"
+        },
+        "trust": {
+            "secure": "Sécurisé",
+            "receipt": "Reçu fiscal",
+            "transparent": "Transparent"
+        },
+        "ctaSection": {
+            "title": "Chaque don compte",
+            "description": "Votre générosité peut transformer la vie d'un enfant.",
+            "donateNow": "Faire un don maintenant"
+        }
+    },
+    "about": {
+        "title": "À propos de nous",
+        "hero": {
+            "badge": "À propos de notre organisation",
+            "title": "Qui sommes-nous ?",
+            "description": "Waqf Sénégal est une organisation dédiée au soutien des Daaras et à l'éducation des enfants à travers le principe islamique du Waqf (dotation perpétuelle).",
+            "years": "Années",
+            "children": "Enfants",
+            "projectsDone": "Projets"
+        },
+        "impact": {
+            "badge": "Notre Impact",
+            "title": "Le Waqf : Une Solidarité en Action",
+            "description": "Découvrez comment votre contribution transforme concrètement le quotidien des Talibés. Le Waqf n'est pas une simple aumône, c'est une fondation solide pour l'avenir de notre communauté.",
+            "donationsUsed": "des dons utilisés",
+            "infrastructure": "Rénovation d'infrastructures éducatives",
+            "infrastructureDesc": "Construction et modernisation des Daaras",
+            "community": "Construit Des Communautés Plus Fortes",
+            "communityDesc": "Renforcement des liens sociaux et solidaires",
+            "sustainable": "Investissement durable et perpétuel",
+            "sustainableDesc": "Des bénéfices qui durent pour toujours",
+            "joinCta": "Rejoignez la communauté maintenant"
+        },
+        "ways": {
+            "badge": "Comment participer",
+            "title": "3 Façons de Bâtir l'Avenir",
+            "description": "Chaque geste compte. Que ce soit par un investissement financier, un parrainage ou votre temps, vous avez le pouvoir de changer des vies durablement.",
+            "sponsor": {
+                "badge": "Parrainage",
+                "title": "Parrainer un Talibé",
+                "description": "Accompagnez un enfant dans son parcours éducatif. Votre parrainage couvre ses besoins essentiels : éducation, santé, alimentation.",
+                "cta": "En savoir plus"
+            },
+            "waqf": {
+                "badge": "Don",
+                "title": "Faire un Waqf",
+                "description": "Investissez dans une charité perpétuelle. Votre Waqf génère des bénéfices continus pour la communauté, génération après génération.",
+                "cta": "Faire un don"
+            },
+            "volunteer": {
+                "badge": "Bénévolat",
+                "title": "Devenir Bénévole",
+                "description": "Donnez de votre temps et de vos compétences. Rejoignez notre équipe de bénévoles et participez activement à nos projets sur le terrain.",
+                "cta": "Nous rejoindre"
+            }
+        },
+        "values": {
+            "badge": "Nos Valeurs",
+            "title": "Ce qui nous guide",
+            "transparency": "Transparence",
+            "transparencyDesc": "Chaque don est tracé et son utilisation est communiquée aux donateurs.",
+            "solidarity": "Solidarité",
+            "solidarityDesc": "Nous croyons en la force de la communauté pour créer un changement durable.",
+            "excellence": "Excellence",
+            "excellenceDesc": "Nous visons l'excellence dans chaque projet que nous entreprenons.",
+            "respect": "Respect",
+            "respectDesc": "Nous respectons la dignité de chaque personne que nous servons."
+        },
+        "stats": {
+            "title": "Notre Impact",
+            "subtitle": "Des chiffres qui témoignent de votre générosité",
+            "years": "Années d'expérience",
+            "projects": "Projets réalisés",
+            "children": "Enfants soutenus",
+            "regions": "Régions couvertes"
+        },
+        "team": {
+            "badge": "Notre Équipe",
+            "title": "Des personnes dévouées",
+            "subtitle": "Une équipe passionnée qui travaille chaque jour pour faire la différence"
+        },
+        "transparency": {
+            "badge": "Transparence",
+            "title": "Nous rendons des comptes",
+            "description": "La transparence est au cœur de notre action. Nous publions régulièrement nos rapports financiers et d'activité pour que vous sachiez exactement comment vos dons sont utilisés.",
+            "reports": "Rapports annuels publics",
+            "audits": "Audits financiers indépendants",
+            "tracking": "Suivi en temps réel des projets",
+            "downloadReport": "Télécharger le rapport annuel",
+            "donationsToProjects": "des dons vont directement aux projets",
+            "projectsLabel": "Projets",
+            "adminLabel": "Administration"
+        },
+        "cta": {
+            "title": "Rejoignez notre mission",
+            "description": "Ensemble, nous pouvons offrir un avenir meilleur aux enfants du Sénégal.",
+            "donate": "Faire un don",
+            "volunteer": "Devenir bénévole"
+        },
+        "mission": {
+            "title": "Notre mission",
+            "description": "Offrir une éducation de qualité et un accompagnement social aux enfants des daaras."
+        },
+        "vision": {
+            "title": "Notre vision",
+            "description": "Un monde où chaque enfant a accès à l'éducation et aux opportunités."
+        },
+        "waqf": {
+            "title": "Qu'est-ce que le Waqf ?",
+            "description": "Le Waqf est une donation pieuse perpétuelle en Islam, dont les revenus sont consacrés à des œuvres de bienfaisance."
+        }
+    },
+    "projects": {
+        "title": "Nos projets",
+        "subtitle": "Découvrez les projets que nous soutenons",
+        "backToProjects": "Retour aux projets",
+        "about": "À propos du projet",
+        "filter": {
+            "all": "Tous",
+            "urgent": "Urgents",
+            "active": "En cours",
+            "completed": "Terminés"
+        },
+        "card": {
+            "raised": "Collectés",
+            "goal": "Objectif",
+            "progress": "de l'objectif atteint",
+            "donors": "donateurs",
+            "support": "Soutenir ce projet",
+            "viewMore": "Voir plus"
+        },
+        "pagination": {
+            "previous": "Précédent",
+            "next": "Suivant",
+            "page": "Page {page} / {totalPages}"
+        },
+        "detail": {
+            "notFound": "Projet non trouvé",
+            "collected": "collectés",
+            "goal": "objectif",
+            "progress": "Progression",
+            "description": "Description",
+            "gallery": "Galerie",
+            "updates": "Mises à jour",
+            "donors": "Donateurs"
+        }
+    },
+    "donate": {
+        "title": "Faire un don",
+        "subtitle": "Votre générosité change des vies",
+        "chooseAmount": "Choisissez un montant",
+        "choosePayment": "Choisissez un moyen de paiement",
+        "yourInfo": "Vos informations",
+        "forProject": "Pour le projet : {title}",
+        "oneTime": "Don ponctuel",
+        "monthly": "Don mensuel",
+        "errors": {
+            "minAmount": "Le montant minimum est de {amount} {currency}"
+        },
+        "actions": {
+            "continue": "Continuer",
+            "continueWithAmount": "Continuer - {amount} {currency}",
+            "processing": "Traitement...",
+            "pay": "Payer {amount} {currency}"
+        },
+        "summary": {
+            "amount": "Montant",
+            "payment": "Paiement"
+        },
+        "amount": {
+            "title": "Choisissez un montant",
+            "custom": "Montant personnalisé",
+            "placeholder": "Entrez un montant"
+        },
+        "allocation": {
+            "title": "Affectation du don",
+            "general": "Don général",
+            "project": "Projet spécifique"
+        },
+        "info": {
+            "title": "Vos informations",
+            "anonymous": "Faire un don anonyme",
+            "name": "Nom complet",
+            "email": "Adresse email",
+            "phone": "Numéro de téléphone",
+            "message": "Message (optionnel)"
+        },
+        "payment": {
+            "title": "Moyen de paiement",
+            "wave": "Wave",
+            "orangeMoney": "Orange Money",
+            "freeMoney": "Free Money",
+            "card": "Carte bancaire"
+        },
+        "confirmation": {
+            "title": "Merci pour votre don !",
+            "message": "Votre générosité fait la différence.",
+            "receipt": "Un reçu vous sera envoyé par email.",
+            "share": "Partager votre don"
+        }
+    },
+    "shop": {
+        "title": "Boutique solidaire",
+        "subtitle": "Achetez solidaire, soutenez nos actions",
+        "addToCart": "Ajouter au panier",
+        "infoBanner": {
+            "title": "Achetez solidaire, soutenez l'éducation",
+            "description": "Chaque achat contribue directement au financement des projets éducatifs de l'association. Merci pour votre soutien !"
+        },
+        "filter": {
+            "all": "Tous"
+        },
+        "empty": {
+            "title": "Aucun produit disponible",
+            "description": "Revenez bientôt pour découvrir nos produits"
+        },
+        "cart": {
+            "title": "Votre panier",
+            "empty": "Votre panier est vide",
+            "subtotal": "Sous-total",
+            "shipping": "Livraison",
+            "total": "Total",
+            "checkout": "Commander",
+            "backToShop": "Voir la boutique",
+            "size": "Taille",
+            "clear": "Vider le panier",
+            "summary": "Résumé",
+            "footerNote": " 100% des bénéfices reversés aux projets"
+        },
+        "checkout": {
+            "title": "Finaliser la commande",
+            "steps": {
+                "information": "Informations",
+                "payment": "Paiement"
+            },
+            "shippingInfoTitle": "Informations de livraison",
+            "fields": {
+                "address": "Adresse",
+                "city": "Ville"
+            },
+            "continueToPayment": "Continuer vers le paiement",
+            "paymentTitle": "Mode de paiement",
+            "processing": "Traitement...",
+            "pay": "Payer {amount} {currency}",
+            "summaryTitle": "Récapitulatif",
+            "empty": {
+                "title": "Votre panier est vide",
+                "description": "Ajoutez des produits avant de passer commande",
+                "backToShop": "Voir la boutique"
+            },
+            "success": {
+                "title": "Commande confirmée !",
+                "description": "Merci pour votre commande. Vous recevrez un email de confirmation avec les détails de livraison.",
+                "continueShopping": "Continuer les achats",
+                "viewOrders": "Voir mes commandes"
+            }
+        },
+        "product": {
+            "description": "Description",
+            "quantity": "Quantité",
+            "inStock": "En stock",
+            "outOfStock": "Rupture de stock",
+            "unknown": "Produit",
+            "backToShop": "Retour à la boutique",
+            "addedToCart": "Ajouté au panier !",
+            "addToCartWithTotal": "{total} {currency}"
+        }
+    },
+    "news": {
+        "title": "Actualités",
+        "subtitle": "Les dernières nouvelles de l'association",
+        "untitled": "Sans titre",
+        "empty": {
+            "title": "Aucun article pour le moment",
+            "description": "Revenez bientôt pour découvrir nos actualités"
+        },
+        "categories": {
+            "all": "Toutes",
+            "events": "Événements",
+            "projects": "Projets",
+            "association": "Vie associative"
+        },
+        "share": "Partager cet article"
+    },
+    "events": {
+        "title": "Événements",
+        "subtitle": "Participez à nos événements",
+        "upcoming": "À venir",
+        "past": "Passés",
+        "empty": {
+            "title": "Aucun événement pour le moment",
+            "description": "Revenez bientôt pour découvrir nos prochains événements"
+        },
+        "details": {
+            "date": "Date",
+            "location": "Lieu",
+            "register": "S'inscrire"
+        }
+    },
+    "contact": {
+        "title": "Nous contacter",
+        "subtitle": "Une question ? N'hésitez pas à nous écrire",
+        "actions": {
+            "sendAnother": "Envoyer un autre message"
+        },
+        "form": {
+            "name": "Votre nom",
+            "email": "Votre email",
+            "phone": "Votre téléphone",
+            "subject": "Sujet",
+            "message": "Votre message",
+            "submit": "Envoyer le message",
+            "loading": "Envoi..."
+        },
+        "info": {
+            "address": "Adresse",
+            "email": "Email",
+            "phone": "Téléphone",
+            "hours": "Horaires d'ouverture"
+        },
+        "success": "Votre message a été envoyé avec succès !",
+        "error": "Une erreur est survenue. Veuillez réessayer."
+    },
+    "auth": {
+        "login": {
+            "title": "Connexion",
+            "subtitle": "Connectez-vous à votre espace donateur",
+            "email": "Email ou téléphone",
+            "password": "Mot de passe",
+            "remember": "Se souvenir de moi",
+            "forgot": "Mot de passe oublié ?",
+            "submit": "Se connecter",
+            "loading": "Connexion...",
+            "noAccount": "Pas encore de compte ?",
+            "register": "S'inscrire",
+            "identifierPlaceholder": "Email ou numéro de téléphone",
+            "errors": {
+                "required": "Veuillez remplir tous les champs",
+                "invalidCredentials": "Identifiants incorrects"
+            }
+        },
+        "register": {
+            "title": "Créer un compte",
+            "subtitle": "Créez votre compte pour suivre vos dons",
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Email",
+            "phone": "Téléphone",
+            "password": "Mot de passe",
+            "confirmPassword": "Confirmer le mot de passe",
+            "submit": "S'inscrire",
+            "loading": "Création...",
+            "hasAccount": "Déjà un compte ?",
+            "login": "Se connecter",
+            "errors": {
+                "emailOrPhoneRequired": "Email ou téléphone requis",
+                "passwordMismatch": "Les mots de passe ne correspondent pas",
+                "passwordMinLength": "Le mot de passe doit contenir au moins 8 caractères"
+            }
+        },
+        "forgot": {
+            "title": "Mot de passe oublié",
+            "description": "Entrez votre email pour recevoir un lien de réinitialisation.",
+            "submit": "Envoyer",
+            "success": "Un email vous a été envoyé.",
+            "emailSentTitle": "Email envoyé !",
+            "backToLogin": "Retour à la connexion",
+            "identifierLabel": "Email ou téléphone",
+            "identifierPlaceholder": "votre@email.com ou +221...",
+            "sending": "Envoi en cours..."
+        },
+        "reset": {
+            "title": "Réinitialiser le mot de passe",
+            "password": "Nouveau mot de passe",
+            "confirm": "Confirmer le mot de passe",
+            "submit": "Réinitialiser"
+        }
+    },
+    "dashboard": {
+        "title": "Mon espace donateur",
+        "welcome": "Bienvenue",
+        "greeting": "Salaam, {name}",
+        "defaultName": "Donateur",
+        "subtitle": "Bienvenue dans votre espace personnel Waqf.",
+        "actions": {
+            "newDonation": "Faire un nouveau don"
+        },
+        "profile": {
+            "title": "Mon profil",
+            "phone": "Téléphone",
+            "notProvided": "Non renseigné",
+            "memberSince": "Membre depuis",
+            "defaultMemberSince": "Janvier 2026",
+            "edit": "Modifier",
+            "changePassword": "Changer le mot de passe"
+        },
+        "stats": {
+            "totalDonations": "Total des dons",
+            "donationCount": "Nombre de dons",
+            "projectsSupported": "Projets soutenus",
+            "monthlyDonation": "Don mensuel actif"
+        },
+        "donations": {
+            "recentTitle": "Dons récents",
+            "empty": "Vous n'avez pas encore fait de don.",
+            "startSupporting": "Commencer à soutenir nos projets",
+            "title": "Mes dons",
+            "history": "Historique",
+            "date": "Date",
+            "amount": "Montant",
+            "project": "Projet",
+            "status": "Statut",
+            "receipt": "Reçu"
+        },
+        "subscriptions": {
+            "title": "Mes dons mensuels",
+            "active": "Actif",
+            "paused": "En pause",
+            "cancel": "Annuler"
+        }
+    },
+    "footer": {
+        "about": "À propos",
+        "description": "L'Association Waqf And Liggeyal Daara œuvre pour l'éducation et le bien-être des enfants défavorisés.",
+        "quickLinks": "Liens rapides",
+        "contact": "Contact",
+        "newsletter": {
+            "title": "Newsletter",
+            "description": "Recevez nos actualités",
+            "placeholder": "Votre email",
+            "submit": "S'abonner"
+        },
+        "social": "Suivez-nous",
+        "copyright": "© {year} Waqf And Liggeyal Daara. Tous droits réservés."
+    }
+}
