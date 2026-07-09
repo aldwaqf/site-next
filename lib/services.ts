@@ -111,6 +111,8 @@ const mockProducts = [
         id: 'prod_1',
         slug: 'tshirt-waqf',
         price: 8000,
+        stock: 25,
+        isActive: true,
         images: ['/img/faire-un-waqf.webp'],
         translations: [
             { language: 'FR', name: 'T-shirt Waqf', description: 'T-shirt solidaire, les bénéfices financent les daaras.' },
@@ -122,6 +124,8 @@ const mockProducts = [
         id: 'prod_2',
         slug: 'tote-bag-daara',
         price: 5000,
+        stock: 40,
+        isActive: true,
         images: ['/img/devenir-benevole.webp'],
         translations: [
             { language: 'FR', name: 'Tote bag Daara', description: 'Sac en toile aux couleurs de l\'association.' },
@@ -275,7 +279,7 @@ export const contentsApi = {
         return paginate(filtered, params);
     },
 
-    getBySlug: async (slug: string) => {
+    getBySlug: async (slug: string, _lang?: string) => {
         await delay();
         const content = mockArticles.find((a) => a.slug === slug);
         if (!content) throw new Error(`Content not found: ${slug}`);
@@ -299,14 +303,44 @@ export const productsApi = {
         return paginate(mockProducts, params);
     },
 
-    getBySlug: async (slug: string) => {
+    getBySlug: async (slug: string, _lang?: string) => {
         await delay();
         const product = mockProducts.find((p) => p.slug === slug);
         if (!product) throw new Error(`Product not found: ${slug}`);
         return product;
     },
 
-    getCategories: async () => {
+    getCategories: async (_lang?: string) => {
+        await delay();
+        return [];
+    },
+};
+
+// Commandes boutique : encore mocké, le vrai module orders (avec paiement
+// PayTech et gestion du stock) sera branché avec le back-office complet.
+export const ordersApi = {
+    create: async (orderData: {
+        customerName: string;
+        customerEmail: string;
+        customerPhone?: string;
+        shippingAddress?: string;
+        paymentMethod?: string;
+        items: { productId: string; quantity: number }[];
+    }) => {
+        await delay(400);
+        console.info('[mock] Commande reçue :', orderData);
+        return {
+            order: { id: 'order_mock', orderNumber: `CMD-${Date.now()}` },
+            paymentData: {} as { checkoutUrl?: string },
+        };
+    },
+
+    getByOrderNumber: async (orderNumber: string) => {
+        await delay();
+        return { orderNumber, status: 'PENDING' };
+    },
+
+    getMyOrders: async () => {
         await delay();
         return [];
     },
