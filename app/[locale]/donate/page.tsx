@@ -243,9 +243,10 @@ function DonateForm() {
                 {/* Step 3: Info */}
                 {step === 3 && (
                     <div className="card p-8">
-                        <h2 className="text-xl font-semibold text-neutral-900 mb-6">
+                        <h2 className="text-xl font-semibold text-neutral-900 mb-2">
                             {t('donate.yourInfo')}
                         </h2>
+                        <p className="text-sm text-neutral-500 mb-6">{t('donate.info.optionalNote')}</p>
 
                         <div className="space-y-4 mb-6">
                             <input

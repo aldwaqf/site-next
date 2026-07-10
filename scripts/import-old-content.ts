@@ -101,11 +101,36 @@ async function importContents() {
   }
 }
 
+async function importCategories() {
+  const categories = await fetchAll<{
+    slug: string;
+    translations: { language: string; name: string }[];
+  }>("/products/categories");
+
+  for (const c of categories) {
+    const category = await prisma.category.upsert({
+      where: { slug: c.slug },
+      update: {},
+      create: { slug: c.slug },
+    });
+    await prisma.categoryTranslation.deleteMany({ where: { categoryId: category.id } });
+    await prisma.categoryTranslation.createMany({
+      data: c.translations.map((t) => ({
+        categoryId: category.id,
+        language: toLang(t.language),
+        name: t.name,
+      })),
+    });
+    console.log(`✓ Catégorie importée : ${c.slug}`);
+  }
+}
+
 async function importProducts() {
   const products = await fetchAll<{
     slug: string; price: string; comparePrice?: string; stock: number;
     images: string[]; isActive: boolean; isFeatured?: boolean;
     translations: Translation[];
+    categories?: { category: { slug: string } }[];
   }>("/products?limit=100");
 
   for (const p of products) {
@@ -131,7 +156,17 @@ async function importProducts() {
         description: t.description,
       })),
     });
-    console.log(`✓ Produit importé : ${p.slug}`);
+    // Liens produit ↔ catégories
+    await prisma.productCategory.deleteMany({ where: { productId: product.id } });
+    for (const pc of p.categories ?? []) {
+      const category = await prisma.category.findUnique({ where: { slug: pc.category.slug } });
+      if (category) {
+        await prisma.productCategory.create({
+          data: { productId: product.id, categoryId: category.id },
+        });
+      }
+    }
+    console.log(`✓ Produit importé : ${p.slug} (${(p.categories ?? []).length} catégorie(s))`);
   }
 }
 
@@ -183,6 +218,7 @@ async function removeDemoData() {
 async function main() {
   await importProjects();
   await importContents();
+  await importCategories();
   await importProducts();
   await importCampaigns();
   await removeDemoData();

@@ -82,9 +82,18 @@
             "donors": "donateurs",
             "support": "Soutenir",
             "items": [
-                { "title": "Daara de Thiès", "goal": "15M FCFA" },
-                { "title": "École Coranique Touba", "goal": "25M FCFA" },
-                { "title": "Rénovation Médina", "goal": "8M FCFA" }
+                {
+                    "title": "Daara de Thiès",
+                    "goal": "15M FCFA"
+                },
+                {
+                    "title": "École Coranique Touba",
+                    "goal": "25M FCFA"
+                },
+                {
+                    "title": "Rénovation Médina",
+                    "goal": "8M FCFA"
+                }
             ]
         },
         "campaigns": {
@@ -330,10 +339,11 @@
         "info": {
             "title": "Vos informations",
             "anonymous": "Faire un don anonyme",
-            "name": "Nom complet",
-            "email": "Adresse email",
-            "phone": "Numéro de téléphone",
-            "message": "Message (optionnel)"
+            "name": "Nom complet (optionnel)",
+            "email": "Adresse email (optionnel)",
+            "phone": "Numéro de téléphone (optionnel)",
+            "message": "Message (optionnel)",
+            "optionalNote": "Toutes ces informations sont facultatives : elles servent uniquement à votre reçu et à vous remercier."
         },
         "payment": {
             "title": "Moyen de paiement",
