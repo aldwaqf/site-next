@@ -69,96 +69,16 @@ export interface PaginatedResponse<T> {
 }
 
 // ---------------------------------------------------------------------------
-// Données mockées
 // ---------------------------------------------------------------------------
 
 
-const mockCampaigns: Campaign[] = [
-    {
-        id: 'camp_1',
-        slug: 'ramadan-2026',
-        status: 'ACTIVE',
-        goalAmount: 20000000,
-        collectedAmount: 12400000,
-        startDate: '2026-02-18T00:00:00.000Z',
-        endDate: '2026-03-20T00:00:00.000Z',
-        isUrgent: true,
-        translations: [
-            { language: 'FR', title: 'Campagne Ramadan 2026', description: 'Paniers alimentaires et repas de rupture du jeûne pour les daaras pendant le mois béni.' },
-            { language: 'EN', title: 'Ramadan 2026 Campaign', description: 'Food baskets and iftar meals for the daaras during the blessed month.' },
-            { language: 'AR', title: 'حملة رمضان 2026', description: 'سلال غذائية ووجبات إفطار للدور خلال الشهر المبارك.' },
-        ],
-    },
-    {
-        id: 'camp_2',
-        slug: 'tabaski-solidaire',
-        status: 'ACTIVE',
-        goalAmount: 10000000,
-        collectedAmount: 3800000,
-        startDate: '2026-05-01T00:00:00.000Z',
-        endDate: '2026-06-30T00:00:00.000Z',
-        isUrgent: false,
-        translations: [
-            { language: 'FR', title: 'Tabaski solidaire', description: 'Offrir des moutons et des habits neufs aux familles des talibés pour la fête de Tabaski.' },
-            { language: 'EN', title: 'Solidarity Tabaski', description: 'Providing sheep and new clothes to students\' families for the Tabaski celebration.' },
-            { language: 'AR', title: 'تباسكي التضامن', description: 'توفير الأضاحي والملابس الجديدة لأسر الطلاب بمناسبة عيد الأضحى.' },
-        ],
-    },
-];
 
 
-const mockArticles = [
-    {
-        id: 'cont_1',
-        slug: 'rentree-coranique-2026',
-        type: 'ARTICLE',
-        featuredImage: '/img/imgi_49_ab-bg-page-title.jpg',
-        isPublished: true,
-        createdAt: '2026-06-15T00:00:00.000Z',
-        publishedAt: '2026-06-15T00:00:00.000Z',
-        translations: [
-            { language: 'FR', title: 'Rentrée coranique 2026 : 300 talibés équipés', excerpt: 'Grâce à vos dons, chaque talibé a reçu un kit complet pour bien démarrer l\'année.', body: 'Grâce à vos dons, chaque talibé a reçu un kit complet.' },
-            { language: 'EN', title: '2026 Quranic School Year: 300 Students Equipped', excerpt: 'Thanks to your donations, every student received a complete kit to start the year.', body: 'Thanks to your donations, every student received a complete kit.' },
-            { language: 'AR', title: 'الدخول القرآني 2026: تجهيز 300 طالب', excerpt: 'بفضل تبرعاتكم، حصل كل طالب على مجموعة كاملة لبدء العام.', body: 'بفضل تبرعاتكم، حصل كل طالب على مجموعة كاملة.' },
-        ],
-    },
-    {
-        id: 'cont_2',
-        slug: 'inauguration-puits-mbacke',
-        type: 'ARTICLE',
-        featuredImage: '/img/imgi_3_Image_fx93.jpg',
-        isPublished: true,
-        createdAt: '2026-05-20T00:00:00.000Z',
-        publishedAt: '2026-05-20T00:00:00.000Z',
-        translations: [
-            { language: 'FR', title: 'Inauguration du puits de Mbacké', excerpt: 'Le premier puits financé par la communauté est en service depuis mai.', body: 'Le premier puits financé par la communauté est en service.' },
-            { language: 'EN', title: 'Mbacké Well Inauguration', excerpt: 'The first community-funded well has been in service since May.', body: 'The first community-funded well is in service.' },
-            { language: 'AR', title: 'تدشين بئر مباكي', excerpt: 'أول بئر ممول من المجتمع يعمل منذ مايو.', body: 'أول بئر ممول من المجتمع يعمل الآن.' },
-        ],
-    },
-];
 
 
-// Simule la petite latence d'un vrai appel réseau
-const delay = (ms = 150) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function paginate<T>(items: T[], params?: { page?: number; limit?: number }): PaginatedResponse<T> {
-    const page = params?.page ?? 1;
-    const limit = params?.limit ?? 10;
-    const start = (page - 1) * limit;
-    return {
-        data: items.slice(start, start + limit),
-        meta: {
-            total: items.length,
-            page,
-            limit,
-            totalPages: Math.ceil(items.length / limit),
-        },
-    };
-}
 
 // ---------------------------------------------------------------------------
-// APIs mockées (mêmes signatures que l'original)
 // ---------------------------------------------------------------------------
 
 export const projectsApi = {
@@ -183,20 +103,15 @@ export const projectsApi = {
 
 export const campaignsApi = {
     getAll: async (params?: { lang?: string; page?: number; limit?: number }) => {
-        await delay();
-        return paginate(mockCampaigns, params);
+        return fetchJson<PaginatedResponse<Campaign>>(`/api/campaigns${buildQuery(params)}`);
     },
 
     getActive: async () => {
-        await delay();
-        return mockCampaigns.filter((c) => c.status === 'ACTIVE');
+        return fetchJson<Campaign[]>('/api/campaigns/active');
     },
 
-    getBySlug: async (slug: string) => {
-        await delay();
-        const campaign = mockCampaigns.find((c) => c.slug === slug);
-        if (!campaign) throw new Error(`Campaign not found: ${slug}`);
-        return campaign;
+    getBySlug: async (slug: string, lang?: string) => {
+        return fetchJson<Campaign>(`/api/campaigns/slug/${slug}${buildQuery({ lang })}`);
     },
 };
 
@@ -256,30 +171,40 @@ export const donationsApi = {
     },
 };
 
+export interface ContentItem {
+    id: string;
+    slug: string;
+    type: string;
+    featuredImage?: string;
+    isPublished: boolean;
+    publishedAt?: string;
+    createdAt: string;
+    translations: Array<{ language: string; title: string; body: string; excerpt?: string }>;
+}
+
 export const contentsApi = {
     getAll: async (params?: { type?: string; lang?: string; isPublished?: boolean; page?: number; limit?: number }) => {
-        await delay();
-        const filtered = params?.type
-            ? mockArticles.filter((a) => a.type === params.type)
-            : mockArticles;
-        return paginate(filtered, params);
+        return fetchJson<PaginatedResponse<ContentItem>>(
+            `/api/contents${buildQuery({ type: params?.type, lang: params?.lang, page: params?.page, limit: params?.limit })}`,
+        );
     },
 
-    getBySlug: async (slug: string, _lang?: string) => {
-        await delay();
-        const content = mockArticles.find((a) => a.slug === slug);
-        if (!content) throw new Error(`Content not found: ${slug}`);
-        return content;
+    getBySlug: async (slug: string, lang?: string) => {
+        return fetchJson<ContentItem>(`/api/contents/slug/${encodeURIComponent(slug)}${buildQuery({ lang })}`);
     },
 
-    getArticles: async (_lang?: string, limit?: number) => {
-        await delay();
-        return mockArticles.slice(0, limit ?? mockArticles.length);
+    getArticles: async (lang?: string, limit?: number) => {
+        const res = await fetchJson<PaginatedResponse<ContentItem>>(
+            `/api/contents${buildQuery({ type: 'ARTICLE', lang, limit })}`,
+        );
+        return res.data;
     },
 
-    getEvents: async () => {
-        await delay();
-        return [];
+    getEvents: async (lang?: string) => {
+        const res = await fetchJson<PaginatedResponse<ContentItem>>(
+            `/api/contents${buildQuery({ type: 'EVENT', lang })}`,
+        );
+        return res.data;
     },
 };
 
@@ -345,19 +270,19 @@ export const contactsApi = {
         subject?: string;
         message: string;
     }) => {
-        await delay(400);
+        await new Promise((resolve) => setTimeout(resolve, 400));
         console.info('[mock] Message de contact reçu :', contactData);
         return { success: true };
     },
 
     subscribeNewsletter: async (email: string) => {
-        await delay(400);
+        await new Promise((resolve) => setTimeout(resolve, 400));
         console.info('[mock] Inscription newsletter :', email);
         return { success: true };
     },
 
     unsubscribeNewsletter: async (email: string) => {
-        await delay(400);
+        await new Promise((resolve) => setTimeout(resolve, 400));
         console.info('[mock] Désinscription newsletter :', email);
         return { success: true };
     },

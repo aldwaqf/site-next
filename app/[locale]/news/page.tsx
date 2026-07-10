@@ -10,7 +10,8 @@ interface Article {
     id: string;
     slug: string;
     featuredImage?: string;
-    publishedAt: string;
+    publishedAt?: string;
+    createdAt: string;
     translations: Array<{
         language: string;
         title: string;
@@ -119,7 +120,7 @@ export default function NewsPage() {
                                     <div className="p-6">
                                         <div className="flex items-center gap-3 mb-3">
                                             <span className="text-sm text-emerald-600 font-medium">
-                                                {formatDate(article.publishedAt)}
+                                                {formatDate(article.publishedAt || article.createdAt)}
                                             </span>
                                         </div>
                                         <h3 className="text-lg font-semibold text-neutral-900 mb-2 group-hover:text-emerald-600 transition-colors">

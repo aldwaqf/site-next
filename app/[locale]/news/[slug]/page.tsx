@@ -10,7 +10,7 @@ interface Article {
     id: string;
     slug: string;
     featuredImage?: string;
-    publishedAt: string;
+    publishedAt?: string;
     createdAt: string;
     translations: Array<{
         language: string;
