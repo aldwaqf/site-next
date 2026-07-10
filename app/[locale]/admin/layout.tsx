@@ -5,13 +5,14 @@
 
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
-import { LayoutDashboard, FolderKanban, PlusCircle, HeartHandshake, ShoppingBag, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, Newspaper, Package, HeartHandshake, ShoppingBag, ExternalLink } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 
 const navItems = [
     { href: '/admin', label: 'Tableau de bord', icon: LayoutDashboard, exact: true },
-    { href: '/admin/projects', label: 'Projets', icon: FolderKanban, exact: true },
-    { href: '/admin/projects/new', label: 'Nouveau projet', icon: PlusCircle, exact: true },
+    { href: '/admin/projects', label: 'Projets', icon: FolderKanban, exact: false },
+    { href: '/admin/articles', label: 'Actualités', icon: Newspaper, exact: false },
+    { href: '/admin/products', label: 'Produits', icon: Package, exact: false },
     { href: '/admin/donations', label: 'Dons', icon: HeartHandshake, exact: true },
     { href: '/admin/orders', label: 'Commandes', icon: ShoppingBag, exact: true },
 ];

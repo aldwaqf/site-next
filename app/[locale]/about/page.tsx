@@ -330,39 +330,6 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Team Section */}
-            <section className="py-20 bg-white">
-                <div className="container">
-                    <div className="text-center mb-16">
-                        <span className="inline-block px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-4">
-                            {t('team.badge')}
-                        </span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                            {t('team.title')}
-                        </h2>
-                        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                            {t('team.subtitle')}
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {[
-                            { name: 'Amadou Diop', role: 'Directeur Général', avatar: 'A' },
-                            { name: 'Fatou Sall', role: 'Responsable des Projets', avatar: 'F' },
-                            { name: 'Moussa Ba', role: 'Coordinateur Terrain', avatar: 'M' },
-                        ].map((member, i) => (
-                            <div key={i} className="text-center">
-                                <div className="w-32 h-32 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                                    <span className="text-5xl font-bold text-emerald-600">{member.avatar}</span>
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-1">{member.name}</h3>
-                                <p className="text-slate-500">{member.role}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* Transparency Section */}
             <section className="py-20 bg-slate-50">
                 <div className="container">

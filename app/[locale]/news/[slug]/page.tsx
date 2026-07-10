@@ -136,11 +136,13 @@ export default function NewsDetailPage() {
                     )}
                 </header>
 
-                {/* Article Body */}
-                <article className="prose prose-lg max-w-none">
-                    <div 
-                        className="text-neutral-700 leading-relaxed whitespace-pre-wrap"
-                        dangerouslySetInnerHTML={{ __html: trans.body.replace(/\n/g, '<br/>') }}
+                {/* Article Body : HTML de l'éditeur riche, ou texte simple
+                    des anciens articles (les \n deviennent des <br/>) */}
+                <article className="prose prose-lg prose-neutral max-w-none prose-img:rounded-2xl">
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: trans.body.includes('<') ? trans.body : trans.body.replace(/\n/g, '<br/>'),
+                        }}
                     />
                 </article>
 

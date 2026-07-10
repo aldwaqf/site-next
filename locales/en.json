@@ -82,9 +82,18 @@
             "donors": "donors",
             "support": "Support",
             "items": [
-                { "title": "Daara of Thiès", "goal": "15M XOF" },
-                { "title": "Quran School Touba", "goal": "25M XOF" },
-                { "title": "Medina Renovation", "goal": "8M XOF" }
+                {
+                    "title": "Daara of Thiès",
+                    "goal": "15M XOF"
+                },
+                {
+                    "title": "Quran School Touba",
+                    "goal": "25M XOF"
+                },
+                {
+                    "title": "Medina Renovation",
+                    "goal": "8M XOF"
+                }
             ]
         },
         "campaigns": {
@@ -330,10 +339,11 @@
         "info": {
             "title": "Your information",
             "anonymous": "Make an anonymous donation",
-            "name": "Full name",
-            "email": "Email address",
-            "phone": "Phone number",
-            "message": "Message (optional)"
+            "name": "Full name (optional)",
+            "email": "Email address (optional)",
+            "phone": "Phone number (optional)",
+            "message": "Message (optional)",
+            "optionalNote": "All fields are optional: they are only used for your receipt and to thank you."
         },
         "payment": {
             "title": "Payment method",

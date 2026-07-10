@@ -132,7 +132,7 @@ export default function Header() {
 
                         <Link
                             href={`/${locale}/donate`}
-                            className="hidden sm:flex items-center gap-2 btn-primary py-2.5 px-5 text-sm"
+                            className="flex items-center gap-2 btn-primary py-2.5 px-4 sm:px-5 text-sm whitespace-nowrap"
                         >
                             {t('donate')}
                         </Link>
