@@ -31,6 +31,7 @@ const translationSchema = z.object({
 });
 
 const updateSchema = z.object({
+  type: z.enum(["ARTICLE", "PAGE", "EVENT", "TESTIMONIAL"]).optional(),
   featuredImage: z.string().nullable().optional(),
   isPublished: z.boolean().optional(),
   translations: z.array(translationSchema).min(1).optional(),
