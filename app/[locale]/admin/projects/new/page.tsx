@@ -120,8 +120,8 @@ export default function NewProjectPage() {
     const inputClass = 'w-full px-4 py-3 border border-neutral-200 rounded-xl focus:border-emerald-500 outline-none';
 
     return (
-        <div className="min-h-screen py-16 bg-neutral-50">
-            <div className="max-w-2xl mx-auto px-4">
+        <div>
+            <div className="max-w-2xl">
                 <h1 className="text-2xl font-semibold text-neutral-900 mb-2">Nouveau projet</h1>
                 <p className="text-neutral-600 mb-8">Créer un projet de collecte visible sur le site.</p>
 
