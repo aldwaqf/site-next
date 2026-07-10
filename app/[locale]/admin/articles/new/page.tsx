@@ -40,7 +40,7 @@ export default function NewArticlePage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     slug: slugify(draft.translations.FR.title),
-                    type: 'ARTICLE',
+                    type: draft.type,
                     featuredImage: draft.featuredImage || null,
                     isPublished: draft.isPublished,
                     translations,

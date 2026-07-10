@@ -23,6 +23,7 @@ export default function EditArticlePage() {
             .then((c) => {
                 const draft: ArticleDraft = {
                     ...emptyArticleDraft,
+                    type: c.type === 'EVENT' ? 'EVENT' : 'ARTICLE',
                     featuredImage: c.featuredImage || '',
                     isPublished: c.isPublished,
                     translations: { ...emptyArticleDraft.translations },
@@ -59,6 +60,7 @@ export default function EditArticlePage() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    type: draft.type,
                     featuredImage: draft.featuredImage || null,
                     isPublished: draft.isPublished,
                     translations,

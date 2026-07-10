@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { contentsApi } from '@/lib/services';
 
 interface Article {
+    type: string;
     id: string;
     slug: string;
     featuredImage?: string;
@@ -31,8 +32,9 @@ export default function NewsPage() {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const data = await contentsApi.getArticles(locale.toUpperCase(), 20);
-                setArticles(data || []);
+                // Tous les contenus publiés (articles ET événements)
+                const res = await contentsApi.getAll({ lang: locale.toUpperCase(), limit: 20 });
+                setArticles((res.data || []) as unknown as Article[]);
             } catch (error) {
                 console.error('Error fetching articles:', error);
             } finally {
@@ -41,6 +43,10 @@ export default function NewsPage() {
         };
         fetchArticles();
     }, [locale]);
+
+    const filteredArticles = selectedCategory === 'all'
+        ? articles
+        : articles.filter((a) => a.type === selectedCategory);
 
     const getTranslation = (article: Article) => {
         return article.translations?.find(tr => tr.language === locale.toUpperCase())
@@ -65,18 +71,22 @@ export default function NewsPage() {
                     <p className="text-lg text-neutral-600">{t('news.subtitle')}</p>
                 </div>
 
-                {/* Categories */}
+                {/* Filtres par type de contenu */}
                 <div className="flex items-center justify-center gap-2 mb-10 flex-wrap">
-                    {['all', 'events', 'projects', 'association'].map((cat) => (
+                    {[
+                        { id: 'all', label: 'all' },
+                        { id: 'ARTICLE', label: 'articles' },
+                        { id: 'EVENT', label: 'events' },
+                    ].map((cat) => (
                         <button
-                            key={cat}
-                            onClick={() => setSelectedCategory(cat)}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedCategory === cat
+                            key={cat.id}
+                            onClick={() => setSelectedCategory(cat.id)}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedCategory === cat.id
                                 ? 'bg-emerald-600 text-white'
                                 : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
                             }`}
                         >
-                            {t(`news.categories.${cat}`)}
+                            {t(`news.categories.${cat.label}`)}
                         </button>
                     ))}
                 </div>
@@ -96,9 +106,13 @@ export default function NewsPage() {
                             {t('news.empty.description')}
                         </p>
                     </div>
+                ) : filteredArticles.length === 0 ? (
+                    <div className="text-center py-16 text-neutral-500">
+                        {t('news.empty.title')}
+                    </div>
                 ) : (
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {articles.map((article) => {
+                        {filteredArticles.map((article) => {
                             const trans = getTranslation(article);
                             return (
                                 <Link

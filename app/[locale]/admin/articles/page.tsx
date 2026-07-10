@@ -25,9 +25,8 @@ export default function AdminArticlesPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Vue admin : on veut aussi les brouillons → on passe par l'API publique
-        // (publiés) puis on complètera avec un paramètre admin si besoin.
-        fetch('/api/contents?type=ARTICLE&limit=50')
+        // Articles ET événements (les brouillons viendront avec un mode admin)
+        fetch('/api/contents?limit=50')
             .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
             .then((json) => setArticles(json.data))
             .catch(console.error)
@@ -71,6 +70,9 @@ export default function AdminArticlesPage() {
                                 </p>
                             </div>
                             <div className="flex items-center gap-2 flex-shrink-0">
+                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${article.type === 'EVENT' ? 'bg-blue-100 text-blue-700' : 'bg-neutral-100 text-neutral-600'}`}>
+                                    {article.type === 'EVENT' ? 'Événement' : 'Article'}
+                                </span>
                                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${article.isPublished ? 'bg-emerald-100 text-emerald-700' : 'bg-neutral-100 text-neutral-500'}`}>
                                     {article.isPublished ? 'Publié' : 'Brouillon'}
                                 </span>

@@ -19,12 +19,14 @@ export interface ArticleTranslationDraft {
 }
 
 export interface ArticleDraft {
+    type: 'ARTICLE' | 'EVENT';
     featuredImage: string;
     isPublished: boolean;
     translations: Record<Lang, ArticleTranslationDraft>;
 }
 
 export const emptyArticleDraft: ArticleDraft = {
+    type: 'ARTICLE',
     featuredImage: '',
     isPublished: true,
     translations: {
@@ -135,12 +137,28 @@ export default function ArticleForm({ initial, saving, submitLabel, onSubmit }: 
                 )}
             </div>
 
-            <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={draft.isPublished}
-                    onChange={(e) => setDraft({ ...draft, isPublished: e.target.checked })}
-                    className="w-4 h-4 rounded border-neutral-300 text-emerald-600" />
-                <span className="text-neutral-700">Publié (visible sur le site)</span>
-            </label>
+            <div className="flex flex-wrap items-center gap-8">
+                <div className="flex items-center gap-3">
+                    <span className="text-sm font-medium text-neutral-700">Type :</span>
+                    {([['ARTICLE', 'Article'], ['EVENT', 'Événement']] as const).map(([value, label]) => (
+                        <button key={value} type="button"
+                            onClick={() => setDraft({ ...draft, type: value })}
+                            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                                draft.type === value
+                                    ? 'bg-emerald-600 text-white'
+                                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                            }`}>
+                            {label}
+                        </button>
+                    ))}
+                </div>
+                <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" checked={draft.isPublished}
+                        onChange={(e) => setDraft({ ...draft, isPublished: e.target.checked })}
+                        className="w-4 h-4 rounded border-neutral-300 text-emerald-600" />
+                    <span className="text-neutral-700">Publié (visible sur le site)</span>
+                </label>
+            </div>
 
             <button type="submit" disabled={saving}
                 className="w-full py-4 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-50">
