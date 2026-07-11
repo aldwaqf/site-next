@@ -51,8 +51,12 @@ export default function Header() {
                     <nav className="hidden md:flex items-center gap-1">
                         {navLinks.map((link) => {
                             const href = `/${locale}${link.href === '/' ? '' : link.href}`;
-                            const isHome = link.href === '/';
-                            const isActive = isHome ? pathname === `/${locale}` || pathname === `/${locale}/` : pathname.startsWith(href);
+                            // En français (langue par défaut), les URLs n'ont pas le
+                            // préfixe /fr : on le retire avant de comparer.
+                            const currentPath = pathname.replace(new RegExp(`^/${locale}(?=/|$)`), '') || '/';
+                            const isActive = link.href === '/'
+                                ? currentPath === '/'
+                                : currentPath.startsWith(link.href);
                             return (
                                 <Link
                                     key={link.key}
